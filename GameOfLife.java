@@ -22,7 +22,7 @@ public class GameOfLife implements Board {
     }
     // Run the simulation for a number of turns
     public void run(int turns) {
-        for (int i = 0, i<turns; i++){
+        for (int i = 0; i<turns; i++){
             step();
         }
     }
@@ -47,6 +47,13 @@ public class GameOfLife implements Board {
 
     public int countNeighbors(int x, int y) {
         int count = 0;
+        for (int AA = -1; AA <=1;AA++){
+            for (int AB = -1; AB <=1;AB++) {
+                if (AA==0 && AB==0) continue;
+                count +=get(x + AA, y+ AB);
+
+            }
+        }
         // count the number of neighbors the cell has
         // use the get(x,y) method to read any board state you need.
         return count;
