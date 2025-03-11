@@ -28,10 +28,19 @@ public class GameOfLife implements Board {
     }
 
     // Step the simulation forward one turn.
-    public void step()
+    public void step() {
     int[][] newBoard = new int[board.length][board[0].length];
-    {
-        print();
+    for (int x = 0; x<board.length; x++){
+        for (int y = 0; y<board[x].length;y++){
+            int neighbors = countNeighbors(x,y);
+        if (board[x][y]==1){
+            newBoard[x][y] = (neighbors == 2 || neighbors == 3) ? 1 : 0;
+        }
+        else {
+            newBoard[x][y]= (neighbors ==3) ? 1 :0;
+        }
+        }
+    }
         // Update the game board, store a 1 if the cell is alive and a 0 otherwise.
     }
 
