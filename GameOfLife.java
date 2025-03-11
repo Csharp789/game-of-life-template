@@ -4,19 +4,19 @@ public class GameOfLife implements Board {
 
     // Integers: 0 or 1 for alive or dead
     private int[][] board;
-    private int [][] board2;
 
     public GameOfLife(int x, int y)
     {
         board = new int [x][y];
-        board2 = new int [x][y];
     }
 
     // Set values on the board
     public void set(int x, int y, int[][] data) {
         for (int i = 0; i < data.length; i++) {
             for (int j = 0; j < data[0].length; j++) {
-                board[(i + x) % board.length][(j + y) % board[0].length] = data[i][j];
+                if (i + x >= 0 && i + x < board.length && j + y >= 0 && j + y < board[0].length) {
+                    board[i + x][j + y] = data[i][j];  
+                }                         
             }
         }
     }
@@ -41,6 +41,7 @@ public class GameOfLife implements Board {
         }
         }
     }
+    board = newBoard;
         // Update the game board, store a 1 if the cell is alive and a 0 otherwise.
     }
 
@@ -49,13 +50,23 @@ public class GameOfLife implements Board {
         int count = 0;
         for (int AA = -1; AA <=1;AA++){
             for (int AB = -1; AB <=1;AB++) {
-                if (AA==0 && AB==0) continue;
-                count +=get(x + AA, y+ AB);
+                if (AA==0 && AB==0) {
+                    continue;
+                }
+                int newX = (x + AA + board.length) % board.length; 
+                int newY = (y + AB + board[0].length) % board[0].length; 
 
+                if (newX >= 0 && newX < board.length && newY >= 0 && newY < board[0].length) {
+                    if (board[newX][newY] == 1) {  
+                        count++;  
+                    }  
+                }
+                
+                
             }
+           
         }
-        // count the number of neighbors the cell has
-        // use the get(x,y) method to read any board state you need.
+    
         return count;
     }
 
@@ -69,7 +80,7 @@ public class GameOfLife implements Board {
     }
 
     // Test helper to get the whole board state
-    public int[][] get()
+    public int[][] getBoard()
     {
         return board;
     }
